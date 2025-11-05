@@ -5,6 +5,9 @@ const apiRoutes = require('./routes');
 const { serverConfig: { PORT }, loggerConfig: logger } = require("./config");
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 
 app.use('/api', apiRoutes)
