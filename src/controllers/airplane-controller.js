@@ -34,8 +34,23 @@ async function getAirplanes(req, res) {
     }
 }
 
+async function getAirplaneById(req, res) {
+    try {
+        const response = await AirplaneService.getAirplaneById(req.params.id);
+        SuccessResponse.message = "Successfully fetched the airplane";
+        SuccessResponse.data = response;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.message = "Something went wrong in the Airplane Controller: getAirplaneById";
+        ErrorResponse.error = { explaination: error.message };
+        return res.status(error.statusCode).json(ErrorResponse);
+    }
+}
+
+
 
 module.exports = {
     createAirplane,
-    getAirplanes
+    getAirplanes,
+    getAirplaneById
 }

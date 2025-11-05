@@ -30,8 +30,22 @@ async function getAirplanes() {
     }
 }
 
+async function getAirplaneById(id) {
+    try {
+        const response = await airplaneRepository.get(id);
+
+        return response;
+    } catch (error) {
+        if (error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError('Airplane is not present', error.statusCode);
+        }
+        throw new AppError("Something went wrong in the airplane service: getAirplaneById", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 module.exports = {
     createAirplane,
-    getAirplanes
+    getAirplanes,
+    getAirplaneById
 }
 
