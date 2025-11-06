@@ -1,8 +1,12 @@
 const express = require('express');
 const { cityController } = require('../../controllers');
+const { CityMiddleware } = require('../../middlewares');
 
 const router = express.Router();
 
-router.post('/', cityController.createCity);
+router.post('/', CityMiddleware.validateCreateRequest, cityController.createCity);
+router.delete('/:id', cityController.destroyCity);
+router.patch('/:id', CityMiddleware.validateUpdateRequest, cityController.updateCity);
+
 
 module.exports = router;

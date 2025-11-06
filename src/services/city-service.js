@@ -22,7 +22,33 @@ async function createCity(data) {
     }
 }
 
+async function destroyCity(id) {
+    try {
+        const response = await cityRepository.destroy(id);
+        return response;
+    } catch (error) {
+        if (error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError('City is not present', error.statusCode);
+        }
+        throw new AppError("Something went wrong in the city service: destroyCity", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+async function updateCity(id, data) {
+    try {
+        const response = await cityRepository.update(id, data);
+        return response;
+    } catch (error) {
+        if (error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError('City is not present', error.statusCode);
+        }
+        throw new AppError("Something went wrong in the city service: updateCity", StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 
 module.exports = {
     createCity,
+    destroyCity,
+    updateCity,
 }

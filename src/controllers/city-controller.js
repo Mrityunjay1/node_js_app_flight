@@ -19,6 +19,34 @@ async function createCity(req, res) {
     }
 }
 
+async function destroyCity(req, res) {
+    try {
+        const city = await CityService.destroyCity(req.params.id);
+        SuccessResponse.message = "Successfully destroyed the city";
+        SuccessResponse.data = city;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.message = "Something went wrong in the City Controller: destroy";
+        ErrorResponse.error = { explaination: error.message };
+        return res.status(error.statusCode).json(ErrorResponse);
+    }
+}
+async function updateCity(req, res) {
+    try {
+        const city = await CityService.updateCity(req.params.id, req.body);
+        SuccessResponse.message = "Successfully updated the city";
+        SuccessResponse.data = city;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.message = "Something went wrong in the City Controller: update";
+        ErrorResponse.error = { explaination: error.message };
+        return res.status(error.statusCode).json(ErrorResponse);
+    }
+}
+
+
 module.exports = {
     createCity,
+    destroyCity,
+    updateCity,
 }
